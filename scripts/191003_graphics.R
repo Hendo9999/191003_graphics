@@ -109,4 +109,11 @@ Using the code from our example gapminder plot:
 ggplot(data = gapminder_1977,mapping = aes(x = gdpPercap, y = pop, colour = continent, size = pop)) +
     geom_point() +
     scale_x_log10()
+
+#challenge 3_7
+#Create a scatterplot using gapminder that shows how life expectancy has changed over time:
+#Hint: the gapminder dataset has a column called year, which should appear on the x-axis.
   
+gapminder %>% 
+  ggplot(mapping = aes(x=year, y= lifeExp)) +
+  geom_point()
