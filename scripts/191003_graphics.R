@@ -117,3 +117,73 @@ ggplot(data = gapminder_1977,mapping = aes(x = gdpPercap, y = pop, colour = cont
 gapminder %>% 
   ggplot(mapping = aes(x=year, y= lifeExp)) +
   geom_point()
+
+#with line geometry
+gapminder %>% 
+  ggplot(mapping = aes(x=year, y= lifeExp)) +
+  geom_line()
+
+#transformation and statistics
+ggplot(data = gapminder, mapping = aes(x = gdpPercap, y = lifeExp)) +
+  geom_point(alpha = 0.3)+ # alpha adds transparency
+  scale_x_log10()+
+  geom_smooth(aes(size = 2, colour = "red"), method = "lm") #add linear regresssion line and change size
+
+ggplot(data = gapminder, mapping = aes(x = gdpPercap, y = lifeExp)) +
+  geom_point(aes(colour = continent)) + # alpha adds transparency
+  scale_x_log10() +
+  scale_colour_manual(values = c("red", "green", "orange", "brown", "purple"))
+
+#Challenge 3_9
+#Modify the color and size of the points on the point layer in the previous example.
+#Hint: do not use the aes function.
+
+
+#previous code
+ggplot(data = gapminder, aes(x = gdpPercap, y = lifeExp)) +
+  geom_point() + 
+  scale_x_log10() + 
+  geom_smooth(method = "lm", size = 1.5)
+
+#modified code for challenge 3_9
+ggplot(data = gapminder, aes(x = gdpPercap, y = lifeExp)) +
+  geom_point(size=5, colour = "purple") + 
+  scale_x_log10() + 
+  geom_smooth(method = "lm", size = 1.5)
+
+#challenge 3_10
+#Modify your solution to Challenge 9 so that the points are now 
+#a different shape and are colored by continent with new trendlines. 
+#Hint: The color argument can be used inside the aesthetic.
+
+#modified code for challenge 3_9
+ggplot(data = gapminder, aes(x = gdpPercap, y = lifeExp, colour = continent)) +
+  geom_point(shape = "square") + 
+  scale_x_log10() + 
+  geom_smooth(method = "lm", size = 1.5)
+?geom_smooth()
+?group_by()
+  
+#Challenge 3_11
+#Try modifying the plot above by changing some colours in the scale 
+#to see if you can find a pleasing combination. 
+#Run the colours() function if you want to see a list of colour names 
+#R can use.
+#There is also a scale_colour_brewer() scale that takes an 
+#argument palette that is the name of a ColorBrewer palette.
+#Select an appropriate colour palette for the continents from 
+#ColorBrewer and apply it to your plot instead.
+
+ggplot(data = gapminder, aes(x = gdpPercap, y = lifeExp, colour = continent)) +
+  geom_point(size=25, shape = "square") + 
+  scale_x_log10() + 
+  geom_smooth(method = "lm", size = 15)+
+scale_colour_manual(values = c("tomato1", "wheat3", "steelblue", "violetred4", "thistle2"))
+
+colours()
+ggplot(data = gapminder, aes(x = gdpPercap, y = lifeExp, colour = continent)) +
+  geom_point(size=25, shape = "square") + 
+  scale_x_log10() + 
+  geom_smooth(method = "lm", size = 15)+
+  scale_color_brewer(palette = "RdPu") #palette code from colour brewer website
+?scale_color_brewer()
