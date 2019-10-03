@@ -180,10 +180,79 @@ ggplot(data = gapminder, aes(x = gdpPercap, y = lifeExp, colour = continent)) +
   geom_smooth(method = "lm", size = 15)+
 scale_colour_manual(values = c("tomato1", "wheat3", "steelblue", "violetred4", "thistle2"))
 
-colours()
+
 ggplot(data = gapminder, aes(x = gdpPercap, y = lifeExp, colour = continent)) +
-  geom_point(size=25, shape = "square") + 
+  geom_point(size=2, shape = "square") + 
   scale_x_log10() + 
-  geom_smooth(method = "lm", size = 15)+
-  scale_color_brewer(palette = "RdPu") #palette code from colour brewer website
-?scale_color_brewer()
+  geom_smooth(method = "lm", size = 2)+
+  scale_color_brewer(palette = "BrBG") #palette code from colour brewer website
+scale_color_brewer()
+
+a_countries <- gapminder %>% 
+  filter(str_starts(country, "A"))
+
+  ggplot(mapping = aes(x = year, y = lifeExp, colour = continent, group = country))+
+  geom_line()+
+  facet_wrap(~country)
+a_countries
+
+gapminder_1977 <- filter(gapminder, year == 1997)
+
+ggplot(data = gapminder_1977, mapping = aes(x=gdpPercap, y = lifeExp, colour = continent, size = pop)) +
+  geom_point()+
+  scale_x_log10()
+
+
+#challenge 3_12
+#When discussing the gapminder video, we decided to ignore the 
+#animation component. Facets provide an option for achieving a 
+#similar effect in a static image. Take our original plot:
+#ggplot(data = gapminder_1977, 
+#mapping = aes(x = gdpPercap, y = lifeExp, colour = continent, size = pop)) +
+#  geom_point() +
+#  scale_x_log10()
+#and modify it by
+#using the full gapminder dataset
+#adding a facet_wrap to demonstrate the change through time
+
+
+ggplot(data = gapminder,
+       mapping = aes(x = gdpPercap, y = lifeExp, colour = continent, size = pop)) +
+         geom_point() +
+         scale_x_log10()+
+  facet_wrap(~continent)
+
+#spontaneous challenge
+gapminder_1977 <- filter(gapminder, year == 1997)
+
+gapminder_rich <- filter(gapminder_1977, gdpPercap > 30000)
+
+ggplot(data = gapminder_1977, mapping = aes(x=gdpPercap, y = lifeExp, colour = continent, 
+                                            size = pop, label = country)) +
+  geom_point()+
+  scale_x_log10()+
+  geom_text(data = gapminder_rich)
+
+rough_plot <- ggplot(data = a_countries,
+  mapping = aes(x=year, y = lifeExp,
+                colour = continent, group = country)
+)+
+  geom_line()+
+  facet_wrap(~country)
+
+rough_plot + scale_color_brewer(palette = "Dark2")
+
+rough_plot_1 <- rough_plot +
+  labs(title = "life expectancy over time for 'A' countries",
+       caption = "Data from Gapminder",
+       x = "year",
+       y = "life expectancy",
+       colour = "continent")+
+  theme(
+    panel.grid.major = element_blank(),
+    plot.title=element_text(size=24),
+    axis.line = element_line(colour = "blue", size = 2)
+  ) 
+ggsave("Figures/my_firsta_plot.png", plot = rough_plot_1, width = 12, height = 10, units = "cm")
+
+rough_plot_1
