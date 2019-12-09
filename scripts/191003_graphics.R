@@ -256,3 +256,5 @@ rough_plot_1 <- rough_plot +
 ggsave("Figures/my_firsta_plot.png", plot = rough_plot_1, width = 12, height = 10, units = "cm")
 
 rough_plot_1
+
+#added comment
